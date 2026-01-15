@@ -1,28 +1,27 @@
-// Write your code here!
 async function fetchData() {
     try {
-        const rawData = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const data = await rawData.json();
-        displayPosts(data);
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const postsArray = await response.json();
+        displayPosts(postsArray);
     } catch (error) {
         console.error(error);
     }
 }
 
-function displayPosts(data) {
-    const container = document.querySelector('#post-list');
-    if (!container) return;
+function displayPosts(postsArray) {
+    const postList = document.querySelector('#post-list');
+    if (!postList) return;
 
-    data.forEach(function (item) {
-        const elementLi = document.createElement('li');
-        const elementHi = document.createElement('h1');
-        const elementP = document.createElement('p');
+    postsArray.forEach(function (post) {
+        const listItem = document.createElement('li');
+        const titleHeading = document.createElement('h1');
+        const bodyParagraph = document.createElement('p');
 
-        elementHi.textContent = item.title;
-        elementP.textContent = item.body;
+        titleHeading.textContent = post.title;
+        bodyParagraph.textContent = post.body;
 
-        elementLi.append(elementHi, elementP);
-        container.appendChild(elementLi);
+        listItem.append(titleHeading, bodyParagraph);
+        postList.appendChild(listItem);
     });
 }
 
